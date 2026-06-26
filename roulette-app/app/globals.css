@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  overflow: hidden;
+}
+
+/* Windows ME Classic Scrollbar */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+::-webkit-scrollbar-track {
+  background: #d4d0c8;
+  border: 1px solid #808080;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4d0c8;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+}
+::-webkit-scrollbar-button {
+  background: #d4d0c8;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+  height: 16px;
+  width: 16px;
+}
+
+/* Win ME Panel Styles */
+.win-raised {
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+  background: #d4d0c8;
+}
+
+.win-sunken {
+  border-top: 2px solid #404040;
+  border-left: 2px solid #404040;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  background: #ffffff;
+}
+
+.win-inset {
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.win-btn {
+  background: #d4d0c8;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+  padding: 3px 12px;
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  min-width: 75px;
+  color: #000000;
+  font-weight: normal;
+}
+
+.win-btn:active:not(:disabled) {
+  border-top: 2px solid #404040;
+  border-left: 2px solid #404040;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  padding: 4px 11px 2px 13px;
+}
+
+.win-btn:disabled {
+  color: #808080;
+  text-shadow: 1px 1px 0 #ffffff;
+  cursor: default;
+}
+
+.win-btn:focus {
+  outline: 1px dotted #000000;
+  outline-offset: -4px;
+}
+
+/* Chip styles */
+.chip {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  border: 3px solid #666;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+  transition: all 0.05s;
+  user-select: none;
+  position: relative;
+}
+
+.chip.selected {
+  border: 3px solid #ffd700;
+  box-shadow: 0 0 10px rgba(255,215,0,0.9), 2px 2px 4px rgba(0,0,0,0.4);
+  transform: scale(1.08);
+}
+
+.chip::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  width: 14px;
+  height: 8px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 50%;
+  transform: rotate(-30deg);
+}
+
+/* Bet cell */
+.bet-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: filter 0.05s;
+}
+
+.bet-cell:hover {
+  filter: brightness(1.15);
+}
+
+.bet-cell:active {
+  filter: brightness(0.9);
+}
+
+.bet-cell.has-bet {
+  outline: 2px solid #ffd700;
+  outline-offset: -2px;
+}
+
+/* Chip on board indicator */
+.board-chip {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffd700;
+  color: #000;
+  font-size: 8px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #b8860b;
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* LED display */
+.led-display {
+  background: #001100;
+  color: #00ff44;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  border-top: 2px solid #404040;
+  border-left: 2px solid #404040;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  padding: 2px 8px;
+  letter-spacing: 1px;
+}
+
+/* Win animation */
+@keyframes winPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+.win-pulse {
+  animation: winPulse 0.6s ease-in-out 3;
+}
+
+/* Status bar */
+.statusbar-panel {
+  border-top: 1px solid #404040;
+  border-left: 1px solid #404040;
+  border-right: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  padding: 1px 6px;
+}
