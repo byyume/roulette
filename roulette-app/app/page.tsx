@@ -60,7 +60,12 @@ export default function RoulettePage() {
   const rotRef = useRef(0);
   const animRef = useRef<number>(0);
 
-  const [balance, setBalance] = useState(1000);
+  const [balance, setBalance] = useState(() => {
+    if (typeof window === "undefined") return 1000;
+    const saved = localStorage.getItem("roulette_balance");
+    const parsed = saved ? parseInt(saved, 10) : NaN;
+    return isNaN(parsed) || parsed <= 0 ? 1000 : parsed;
+  });
   const [chip, setChip] = useState<number>(5);
   const [bets, setBets] = useState<Bet[]>([]);
   const [spinning, setSpinning] = useState(false);
@@ -69,6 +74,11 @@ export default function RoulettePage() {
   const [status, setStatus] = useState("베팅을 선택하고 SPIN 버튼을 클릭하세요.");
   const [winFlash, setWinFlash] = useState(false);
   const [history, setHistory] = useState<number[]>([]);
+
+  // 잔액 변경 시 localStorage 저장
+  useEffect(() => {
+    localStorage.setItem("roulette_balance", String(balance));
+  }, [balance]);
 
   // ── 캔버스 휠 ────────────────────────────────────────────
   const drawWheel = useCallback(
@@ -374,6 +384,12 @@ export default function RoulettePage() {
           <button className="win-btn" onClick={clearBets} disabled={spinning}>
             ↺ 베팅 취소
           </button>
+          {balance === 0 && (
+            <button className="win-btn" style={{ color: "#006600", fontWeight: "bold" }}
+              onClick={() => { localStorage.setItem("roulette_balance", "1000"); setBalance(1000); setStatus("잔액이 1000칩으로 충전되었습니다."); }}>
+              💰 충전 (+1000)
+            </button>
+          )}
           <div style={{ width: 1, height: 22, background: "#808080", borderRight: "1px solid #ffffff", margin: "0 4px" }} />
           <span>잔액:</span>
           <span className="led-display" style={{ fontSize: 13, minWidth: 80, textAlign: "right" }}>
